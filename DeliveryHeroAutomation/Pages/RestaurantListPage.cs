@@ -130,11 +130,17 @@ namespace DeliveryHeroAutomation.Pages
         public void ClickExpress()
         {
             ExpressCheckBox.FluentClick();
-            var value = ExpressCheckBox.GetAttribute("checked");
-
-            var check  = Convert.ToBoolean(value);
-            Assert.True(check);
+            IsChecked(ExpressCheckBox);
             
+        }
+
+        public void IsChecked(IWebElement element = null)
+        {
+            element ??= ExpressCheckBox;
+            var value = element.GetAttribute("checked");
+
+            var check = Convert.ToBoolean(value);
+            Assert.True(check);
         }
 
         public void ScrollTab()

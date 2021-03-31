@@ -1,4 +1,8 @@
-﻿using DeliveryHeroAutomation.Framework.Model.Base;
+﻿using System;
+using DeliveryHeroAutomation.Framework.Model.Base;
+using DeliveryHeroAutomation.Framework.Services;
+using NuGet.Frameworks;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 
@@ -22,22 +26,7 @@ namespace DeliveryHeroAutomation.Pages
         #region 랭킹정렬
         [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_sort_type']//*[@text='요기요 랭킹순']")]
         public IWebElement FilterSortRankingDescRadio { get; set; }
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_sort_type']//*[@text='배달요금순']")]
-        public IWebElement FilterSortRankingDeliveryPayAscRadio { get; set; }
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_sort_type']//*[@text='별점순']")]
-        public IWebElement FilterSortRankingStarDescRadio { get; set; }
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_sort_type']//*[@text='리뷰 많은순']")]
-        public IWebElement FilterSortRankingReviewDescRadio { get; set; }
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_sort_type']//*[@text='최소 주문 금액순']")]
-        public IWebElement FilterSortRankingOrderPayAscRadio { get; set; }
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_sort_type']//*[@text='거리순']")]
-        public IWebElement FilterSortRankingStreetAscRadio { get; set; }
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_sort_type']//*[@text='할인율 순']")]
-        public IWebElement FilterSortRankingSaleDescRadio { get; set; }
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_sort_type']//*[@text='사장님 댓글순']")]
-        public IWebElement FilterSortRankingBossCommentDescRadio { get; set; }
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_sort_type']//*[@text='배달 시간순']")]
-        public IWebElement FilterSortRankingDeliveryTimeAscRadio { get; set; }
+       
 
 
 
@@ -46,19 +35,13 @@ namespace DeliveryHeroAutomation.Pages
 
         #region 결제타입
 
-
+        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_payment_type']")]
+        public IWebElement FilterMethodPaymentRadio { get; set; }
 
 
         [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_payment_type']//*[@text='결제수단 전체']")]
         public IWebElement FilterMethodPaymentAllRadio { get; set; }
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_payment_type']//*[@text='현금']")]
-        public IWebElement FilterMethodPaymentCashRadio { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_payment_type']//*[@text='현장카드']")]
-        public IWebElement FilterMethodPaymentOnSiteRadio { get; set; }
-
-        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_payment_type']//*[@text='요기서결제']")]
-        public IWebElement FilterMethodPaymentHereRadio { get; set; }
+      
         #endregion
 
         [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/tv_tab_name']")]
@@ -66,5 +49,75 @@ namespace DeliveryHeroAutomation.Pages
 
 
 
+        public void IsLoaded()
+        {
+            FilterSortRadio.IsCompleted();
+            FilterMethodPaymentRadio.IsCompleted();
+        }
+
+        public RestaurantListPage CloseFilter()
+        {
+            FilterCloseImageButton.FluentClick();
+
+            var nextPage = GetInstance<RestaurantListPage>();
+
+            return nextPage;
+        }
+
+        public RestaurantListPage ClickApplyButton()
+        {
+            ApplyButton.FluentClick();
+
+            var nextPage = GetInstance<RestaurantListPage>();
+
+            return nextPage;
+        }
+
+        public void ClickExpress()
+        {
+            FilterExpressCheckBox.FluentClick();
+
+            IsChecked(FilterExpressCheckBox);
+        }
+
+        public void ClickRankingSortType(string rankingSortType)
+        {
+            var sortType =
+            By.XPath($"//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_sort_type']//*[@text='{rankingSortType}']")
+                .FluentFindElement();
+            sortType.FluentClick();
+
+           IsChecked(sortType);
+        }
+
+        public void ClickPaymentSortType(string paymentSortType)
+        {
+            var sortType =
+                By.XPath($"//*[@resource-id='com.fineapp.yogiyo:id/radioGroup_payment_type']//*[@text='{paymentSortType}']]")
+                    .FluentFindElement();
+            sortType.FluentClick();
+
+            IsChecked(sortType);
+        }
+
+        public void IsChecked(IWebElement element)
+        {
+            var value = element.GetAttribute("checked");
+
+            var check = Convert.ToBoolean(value);
+            Assert.True(check);
+        }
+
+        public void FilterResetClick()
+        {
+            FilterResetButton.FluentClick();
+        }
+
+        public void FilterIsReset()
+        {
+            IsChecked(FilterMethodPaymentAllRadio);
+            IsChecked(FilterSortRankingDescRadio);
+
+        }
     }
 }

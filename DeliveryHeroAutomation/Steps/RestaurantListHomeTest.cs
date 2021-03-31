@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DeliveryHeroAutomation.Framework.Model.Base;
 using DeliveryHeroAutomation.Framework.Services;
 using DeliveryHeroAutomation.Pages;
 using TechTalk.SpecFlow;
@@ -83,15 +84,26 @@ namespace DeliveryHeroAutomation.Steps
         [Given(@"음식점 필터 클릭")]
         public void 조건음식점필터클릭()
         {
+            var nextPage =
+            PageManager.Instance.CurrentPage.As<RestaurantListPage>().ClickFilter();
+
+            PageManager.Instance.CurrentPage = nextPage;
         }
 
         [Then(@"음식점 필터 노출")]
         public void 그러면음식점필터노출()
         {
+            PageManager.Instance.CurrentPage.As<FilterPage>().IsLoaded();
         }
 
-        
 
+
+        [Then(@"익스프레스 체크 박스 체크 됨")]
+        public void 그러면익스프레스체크박스체크됨()
+        {
+            PageManager.Instance.CurrentPage.As<RestaurantListPage>().IsChecked();
+
+        }
 
     }
 }
