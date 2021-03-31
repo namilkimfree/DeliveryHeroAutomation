@@ -1,25 +1,30 @@
 ﻿using DeliveryHeroAutomation.Framework.Model.Base;
+using DeliveryHeroAutomation.Framework.Services;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Appium;
 using SeleniumExtras.PageObjects;
 
 namespace DeliveryHeroAutomation.Pages
 {
     public class AcceptTermsAndConditionsPage : BasePage
     {
-        [FindsBy(How = How.Id, Using = "com.fineapp.yogiyo:id/chk_agreement_all")]
+        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/chk_agreement_all']")]
         public IWebElement AgreementAllCheckBox { get; set; }
 
-        [FindsBy(How = How.Id, Using = "com.fineapp.yogiyo:id/btn_start")]
+        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/btn_start']")]
         public IWebElement StartButton { get; set; }
 
         public void CheckTheAll()
         {
-            AgreementAllCheckBox.Click();
+            AgreementAllCheckBox.FluentClick();
         }
 
-        public void ClickStartButton()
+        public PermissionPage ClickStartButton()
         {
-            StartButton.Click();
+            StartButton.FluentClick();
+
+            var nextPage = GetInstance<PermissionPage>();
+            return nextPage;
         }
         
     }

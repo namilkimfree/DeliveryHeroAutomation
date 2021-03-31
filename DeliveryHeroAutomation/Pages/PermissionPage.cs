@@ -1,5 +1,7 @@
 ﻿using DeliveryHeroAutomation.Framework.Model.Base;
+using DeliveryHeroAutomation.Framework.Services;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Appium;
 using SeleniumExtras.PageObjects;
 
 namespace DeliveryHeroAutomation.Pages
@@ -7,15 +9,15 @@ namespace DeliveryHeroAutomation.Pages
     public class PermissionPage : BasePage
     {
 
-        [FindsBy(How = How.Id, Using = "com.android.packageinstaller:id/permission_allow_button")]
+        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.android.packageinstaller:id/permission_allow_button']")]
         public IWebElement PermissionAllowButton { get; set; }
 
-        [FindsBy(How = How.Id, Using = "com.android.packageinstaller:id/permission_deny_button")]
+        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.android.packageinstaller:id/permission_deny_button']")]
         public IWebElement PermissionDenyButton { get; set; }
 
         public DeliveryAddressPage ClickPermissionAllowButton()
         {
-            PermissionAllowButton.Click();
+            PermissionAllowButton.FluentClick();
 
             var nextPage = GetInstance<DeliveryAddressPage>();
 
@@ -24,7 +26,8 @@ namespace DeliveryHeroAutomation.Pages
 
         public DeliveryAddressPage ClickPermissionDenyButton()
         {
-            PermissionDenyButton.Click();
+
+            PermissionDenyButton.FluentClick();
 
             var nextPage = GetInstance<DeliveryAddressPage>();
 

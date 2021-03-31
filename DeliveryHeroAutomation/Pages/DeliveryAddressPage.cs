@@ -1,47 +1,74 @@
 ﻿using System;
 using DeliveryHeroAutomation.Framework.Model.Base;
+using DeliveryHeroAutomation.Framework.Services;
+using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.PageObjects;
+using SeleniumExtras.PageObjects;
 
 namespace DeliveryHeroAutomation.Pages
 {
     public class DeliveryAddressPage : BasePage
     {
-        [FindsBy(How = How.Id, Using = "com.fineapp.yogiyo:id/et_keyword")]
+        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/et_keyword']")]
         public IWebElement Address { get; set; }
 
-        [FindsBy(How = How.Id, Using = "com.fineapp.yogiyo:id/ll_content_address_layout")]
-        public IWebElement FirstAddress{ get; set; }
-
-        [FindsBy(How = How.Id, Using = "com.fineapp.yogiyo:id/btn_location_go_delivery")]
-        public IWebElement HereDeliveryButton { get; set; }
 
 
-        public DeliveryAddressPage() :base()
+        public void IsLoaded()
         {
-        }
-
-
-
-        public void IsLoading()
-        {
-
+            Address.IsCompleted();
         }
 
         public void SetDeliveryAddress(string targetAddress)
         {
-            Address.Click();
+            Address.FluentClick();
 
             Address.SendKeys(targetAddress);
+
+            ((AndroidDriver<IWebElement>)(AppiumDrvier)).PressKeyCode(AndroidKeyCode.Enter);
+            
         }
 
-        public void SelectMyAddress()
+        public AddressDetailPage SelectMyAddress()
         {
-            FirstAddress.Click();
+            var myAddress = AppiumDrvier.FindElementByXPath(
+                "//*[@resource-id='com.fineapp.yogiyo:id/rv_location_address']/android.view.ViewGroup[@clickable='true']");
+
+            myAddress.FluentClick();
+
+            var nextPage = GetInstance<AddressDetailPage>();
+
+            return nextPage;
         }
 
-        public void ClickHereDeliveryButton() => HereDeliveryButton.Click();
+        public void IsSearched()
+        {
+            var myAddress =
+            By.XPath("//*[@resource-id='com.fineapp.yogiyo:id/rv_location_address']/android.view.ViewGroup[@clickable='true']").FluentFindElement();
 
+            Assert.NotNull(myAddress);
+
+        }
+
+
+       
+    }
+
+    public class AddressDetailPage : BasePage
+    {
+        [FindsBy(How = How.XPath, Using = "//*[@resource-id='com.fineapp.yogiyo:id/btn_location_go_delivery']")]
+        public IWebElement HereDeliveryButton { get; set; }
+
+        public AdvertisingPopup ClickHereDeliveryButton()
+        {
+            HereDeliveryButton.FluentClick();
+
+            var nextPage = GetInstance<AdvertisingPopup>();
+
+            return nextPage;
+        }
     }
 }

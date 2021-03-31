@@ -74,15 +74,21 @@ namespace DeliveryHeroAutomation.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("요기요 홈 화면 정상 로딩 확인")]
-        [NUnit.Framework.CategoryAttribute("레스토랑")]
-        public virtual void 요기요홈화면정상로딩확인()
+        [NUnit.Framework.DescriptionAttribute("레스토랑 전체 리스트 화면의 음식전 안내 팝업 확인")]
+        [NUnit.Framework.CategoryAttribute("레스토랑화면")]
+        [NUnit.Framework.CategoryAttribute("음식점")]
+        [NUnit.Framework.CategoryAttribute("안내")]
+        [NUnit.Framework.CategoryAttribute("클릭")]
+        public virtual void 레스토랑전체리스트화면의음식전안내팝업확인()
         {
             string[] tagsOfScenario = new string[] {
-                    "레스토랑"};
+                    "레스토랑화면",
+                    "음식점",
+                    "안내",
+                    "클릭"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("요기요 홈 화면 정상 로딩 확인", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("레스토랑 전체 리스트 화면의 음식전 안내 팝업 확인", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 58
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -102,11 +108,199 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
- testRunner.Given("요기요 홈 탭 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "먼저");
+#line 59
+ testRunner.Given("권한 안내 확인 버튼 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "먼저");
 #line hidden
-#line 6
- testRunner.Then("요기요 홈 화면 로딩", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그러면");
+#line 60
+ testRunner.And("시작하기 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 61
+ testRunner.And("권한 동의 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 62
+ testRunner.Then("배달 주소 검색 화면 이동", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그러면");
+#line hidden
+#line 63
+ testRunner.When("주소 \'서초동 1498-5\' 입력", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "만일");
+#line hidden
+#line 64
+ testRunner.And("주소가 있다면", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 65
+ testRunner.Given("검색된 주소 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "먼저");
+#line hidden
+#line 66
+ testRunner.And("요기로 배달 버튼 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 67
+ testRunner.And("권한 허용 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 68
+ testRunner.When("요기요 홈 화면 이동", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "만일");
+#line hidden
+#line 69
+ testRunner.And("음식점 카테고리 전체 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 70
+ testRunner.Then("음식점 카테고리 화면 이동", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그러면");
+#line hidden
+#line 71
+ testRunner.Given("음식점 안내 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "먼저");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("레스토랑 전체 리스트 탭 스크롤")]
+        [NUnit.Framework.CategoryAttribute("레스토랑화면")]
+        [NUnit.Framework.CategoryAttribute("탭")]
+        [NUnit.Framework.CategoryAttribute("스크롤")]
+        public virtual void 레스토랑전체리스트탭스크롤()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "레스토랑화면",
+                    "탭",
+                    "스크롤"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("레스토랑 전체 리스트 탭 스크롤", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 75
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 76
+ testRunner.Given("권한 안내 확인 버튼 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "먼저");
+#line hidden
+#line 77
+ testRunner.And("시작하기 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 78
+ testRunner.And("권한 동의 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 79
+ testRunner.Then("배달 주소 검색 화면 이동", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그러면");
+#line hidden
+#line 80
+ testRunner.When("주소 \'서초동 1498-5\' 입력", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "만일");
+#line hidden
+#line 81
+ testRunner.And("주소가 있다면", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 82
+ testRunner.Given("검색된 주소 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "먼저");
+#line hidden
+#line 83
+ testRunner.And("요기로 배달 버튼 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 84
+ testRunner.And("권한 허용 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 85
+ testRunner.When("요기요 홈 화면 이동", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "만일");
+#line hidden
+#line 86
+ testRunner.And("음식점 카테고리 전체 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 87
+ testRunner.Then("음식점 카테고리 화면 이동", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그러면");
+#line hidden
+#line 88
+ testRunner.Given("탭 스크롤", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "먼저");
+#line hidden
+#line 89
+ testRunner.Then("기존 선택된 탭 보이지 않는다.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그러면");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("레스토랑 전체 리스트 탭 변경")]
+        [NUnit.Framework.CategoryAttribute("레스토랑화면")]
+        [NUnit.Framework.CategoryAttribute("탭")]
+        [NUnit.Framework.CategoryAttribute("변경")]
+        public virtual void 레스토랑전체리스트탭변경()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "레스토랑화면",
+                    "탭",
+                    "변경"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("레스토랑 전체 리스트 탭 변경", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 93
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 94
+ testRunner.Given("권한 안내 확인 버튼 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "먼저");
+#line hidden
+#line 95
+ testRunner.And("시작하기 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 96
+ testRunner.And("권한 동의 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 97
+ testRunner.Then("배달 주소 검색 화면 이동", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그러면");
+#line hidden
+#line 98
+ testRunner.When("주소 \'서초동 1498-5\' 입력", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "만일");
+#line hidden
+#line 99
+ testRunner.And("주소가 있다면", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 100
+ testRunner.Given("검색된 주소 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "먼저");
+#line hidden
+#line 101
+ testRunner.And("요기로 배달 버튼 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 102
+ testRunner.And("권한 허용 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 103
+ testRunner.When("요기요 홈 화면 이동", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "만일");
+#line hidden
+#line 104
+ testRunner.And("음식점 카테고리 전체 클릭", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그리고");
+#line hidden
+#line 105
+ testRunner.Then("음식점 카테고리 화면 이동", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "그러면");
+#line hidden
+#line 106
+ testRunner.Given("탭 변경", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "먼저");
 #line hidden
             }
             this.ScenarioCleanup();

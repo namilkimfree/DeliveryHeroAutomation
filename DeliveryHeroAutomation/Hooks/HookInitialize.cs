@@ -20,10 +20,10 @@ namespace DeliveryHeroAutomation.Hooks
         }
 
 
-        [BeforeFeature()]
-        public static void InitializeFeature()
+        [AfterTestRun]
+        public static void AfterTestRun()
         {
-
+            DriverManager.Instance.CloseServer();
         }
 
     }

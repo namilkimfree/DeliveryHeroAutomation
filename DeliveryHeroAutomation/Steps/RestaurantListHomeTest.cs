@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DeliveryHeroAutomation.Framework.Services;
 using DeliveryHeroAutomation.Pages;
 using TechTalk.SpecFlow;
 
@@ -18,58 +19,79 @@ namespace DeliveryHeroAutomation.Steps
             _scenarioContext = scenarioContext;
         }
 
-        [Given(@"요기요 홈 탭 클릭")]
-        public void 조건요기요홈탭클릭()
+        [When(@"요기요 홈 화면 이동")]
+        public void 만일요기요홈화면이동()
         {
-            var homePage = new HomePage();
-
-            homePage.Test();
+            PageManager.Instance.CurrentPage.As<HomePage>().IsLoaded();
         }
 
-        [Then(@"요기요 홈 화면 로딩")]
-        public void 그러면요기요홈화면로딩()
+        [When(@"음식점 카테고리 전체 클릭")]
+        public void 만일음식점카테고리전체클릭()
         {
+            var nextPage =
+            PageManager.Instance.CurrentPage.As<HomePage>().ClickAllRestaurantButton();
+
+            PageManager.Instance.CurrentPage = nextPage;
+        }
+
+        [Then(@"음식점 카테고리 화면 이동")]
+        public void 그러면음식점카테고리화면이동()
+        {
+            PageManager.Instance.CurrentPage.As<RestaurantListPage>().DefaultSelectedTab();
+            PageManager.Instance.CurrentPage.As<RestaurantListPage>().IsLoaded();
+
+        }
+
+        [Given(@"요기요 익스프레스 체크")]
+        public void 조건요기요익스프레스체크()
+        {
+            PageManager.Instance.CurrentPage.As<RestaurantListPage>().ClickExpress();
+        }
+
+        [Given(@"음식점 안내 클릭")]
+        public void 조건음식점안내클릭()
+        {
+            PageManager.Instance.CurrentPage.As<RestaurantListPage>().ClickShopInfo();
+
+        }
+
+        [Given(@"탭 스크롤")]
+        public void 조건탭스크롤()
+        {
+            PageManager.Instance.CurrentPage.As<RestaurantListPage>().ScrollTab();
+        }
+        [Then(@"기존 선택된 탭 보이지 않는다\.")]
+        public void 그러면기존선택된탭보이지않는다_()
+        {
+            PageManager.Instance.CurrentPage.As<RestaurantListPage>().DefaultTabIsNotDisplayed();
         }
 
 
-        [Given("the first number is (.*)")]
-        public void GivenTheFirstNumberIs(int number)
+        [Given(@"탭 변경")]
+        public void 조건탭변경()
         {
-            //TODO: implement arrange (precondition) logic
-            // For storing and retrieving scenario-specific data see https://go.specflow.org/doc-sharingdata 
-            // To use the multiline text or the table argument of the scenario,
-            // additional string/Table parameters can be defined on the step definition
-            // method. 
+            PageManager.Instance.CurrentPage.As<RestaurantListPage>().ClickRandomTab();
 
-            _scenarioContext.Pending();
         }
 
-        [Given("the second number is (.*)")]
-        public void GivenTheSecondNumberIs(int number)
+        [Given(@"바텀 네비게이션 변경")]
+        public void 조건바텀네비게이션변경()
         {
-            //TODO: implement arrange (precondition) logic
-            // For storing and retrieving scenario-specific data see https://go.specflow.org/doc-sharingdata 
-            // To use the multiline text or the table argument of the scenario,
-            // additional string/Table parameters can be defined on the step definition
-            // method. 
-
-            _scenarioContext.Pending();
+            PageManager.Instance.CurrentPage.As<RestaurantListPage>().ClickRandomBottomNavigation();
         }
 
-        [When("the two numbers are added")]
-        public void WhenTheTwoNumbersAreAdded()
+        [Given(@"음식점 필터 클릭")]
+        public void 조건음식점필터클릭()
         {
-            //TODO: implement act (action) logic
-
-            _scenarioContext.Pending();
         }
 
-        [Then("the result should be (.*)")]
-        public void ThenTheResultShouldBe(int result)
+        [Then(@"음식점 필터 노출")]
+        public void 그러면음식점필터노출()
         {
-            //TODO: implement assert (verification) logic
-
-            _scenarioContext.Pending();
         }
+
+        
+
+
     }
 }

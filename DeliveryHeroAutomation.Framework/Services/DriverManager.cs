@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Dynamic;
+using System.IO;
 using DeliveryHeroAutomation.Framework.Config;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
@@ -7,13 +8,14 @@ using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Support.UI;
 using Platform = DeliveryHeroAutomation.Framework.Model.Base.Platform;
 
 namespace DeliveryHeroAutomation.Framework.Services
 {
     public class DriverManager
     {
-        public AppiumDriver<AppiumWebElement> AppiumDriver;
+        public AppiumDriver<IWebElement> AppiumDriver;
 
         private static Lazy<DriverManager> _instance = new Lazy<DriverManager>( () => new DriverManager());
 
@@ -24,17 +26,25 @@ namespace DeliveryHeroAutomation.Framework.Services
         }
 
 
+        public void CloseServer()
+        {
+            AppiumService.LocalServiceStop();
+        }
+
         public void DriverInitialize(Platform targetPlatform)
         {
             AppiumDriver = targetPlatform switch
             {
                 Platform.Android =>
-                    new AndroidDriver<AppiumWebElement>(AppiumService.LocalServiceBuild(), GetDriverOptions(), TimeSpan.FromSeconds(30)),
+                    new AndroidDriver<IWebElement>(AppiumService.LocalServiceBuild(), GetDriverOptions(), TimeSpan.FromSeconds(30)),
                 Platform.iOS =>
-                    new IOSDriver<AppiumWebElement>(AppiumLocalService.BuildDefaultService(), GetDriverOptions(), TimeSpan.FromSeconds(30)),
+                    new IOSDriver<IWebElement>(AppiumLocalService.BuildDefaultService(), GetDriverOptions(), TimeSpan.FromSeconds(30)),
                 _ => throw new InvalidOperationException("Invalid platform type")
 
             };
+
+            AppiumDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            
         }
 
         public AppiumOptions GetDriverOptions()
@@ -45,10 +55,10 @@ namespace DeliveryHeroAutomation.Framework.Services
             appiumOptions.AddAdditionalCapability(MobileCapabilityType.AutomationName, Setting.TestSettings.AutomationName);
             appiumOptions.AddAdditionalCapability(MobileCapabilityType.DeviceName, Setting.TestSettings.DeviceName);
             appiumOptions.AddAdditionalCapability(MobileCapabilityType.App, Setting.TestSettings.App);
-
+            appiumOptions.AddAdditionalCapability("unicodeKeyboard", "true");
+            appiumOptions.AddAdditionalCapability("resetKeyboard", "true");
 
             return appiumOptions;
         }
-
     }
 }
