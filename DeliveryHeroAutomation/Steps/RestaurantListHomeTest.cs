@@ -68,7 +68,7 @@ namespace DeliveryHeroAutomation.Steps
         }
 
 
-        [Given(@"탭 변경")]
+        [Given(@"임의 탭 변경")]
         public void 조건탭변경()
         {
             PageManager.Instance.CurrentPage.As<RestaurantListPage>().ClickRandomTab();
