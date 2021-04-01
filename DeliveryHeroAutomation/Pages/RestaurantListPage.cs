@@ -73,11 +73,19 @@ namespace DeliveryHeroAutomation.Pages
 
         #endregion
 
+        /// <summary>
+        /// Page Loaded 확인용 Method
+        /// 
+        /// </summary>
         public void IsLoaded()
         {
             Assert.True(RecyclerScroll.Displayed);
         }
 
+        /// <summary>
+        /// I button Click
+        /// Tooltip 노출되는지 확인
+        /// </summary>
         public void ClickShopInfo()
         {
             ShopInfoButton.FluentClick();
@@ -87,14 +95,18 @@ namespace DeliveryHeroAutomation.Pages
 
             Assert.NotNull(tooltip);
 
-            
-
             var filterLayout =
                 By.XPath("//*[@resource-id='com.fineapp.yogiyo:id/cl_restaurant_filter']").FluentFindElement();
 
             filterLayout.Tap();
         }
 
+
+        /// <summary>
+        /// Tab 클릭은 Random하게
+        /// 현재 보여지는 Tab증에
+        /// Random하게 클릭한다.
+        /// </summary>
         public void ClickRandomTab()
         {
             var tabs =
@@ -109,15 +121,24 @@ namespace DeliveryHeroAutomation.Pages
             Assert.True(CurrentTab.Selected);
         }
 
+
+        /// <summary>
+        /// 현재 보여지는 Tab들을 가져오고
+        /// 제일 끝에서 처음 있는 위치로 이동
+        /// </summary>
         public void RollbackTab()
         {
             var tabs =
                 AppiumDrvier.FindElements(By.XPath("//*[@class='androidx.appcompat.app.ActionBar$Tab']"));
+            
+            tabs[0].FluentScrollForClick(tabs[tabs.Count - 1], _defaultTabBy);
 
-            //tabs[tabs.Count - 1].FluentScrollForClick(tabs[0],_defaultTabBy);
-                        
         }
 
+        /// <summary>
+        /// filter button 클릭
+        /// </summary>
+        /// <returns></returns>
         public FilterPage ClickFilter()
         {
             FilterImageButton.FluentClick();
@@ -127,6 +148,10 @@ namespace DeliveryHeroAutomation.Pages
             return nextPage;
         }
 
+
+        /// <summary>
+        /// 요기요 익스프레스 체크박스 체크
+        /// </summary>
         public void ClickExpress()
         {
             ExpressCheckBox.FluentClick();
@@ -134,13 +159,17 @@ namespace DeliveryHeroAutomation.Pages
             
         }
 
+        /// <summary>
+        /// 특정
+        /// </summary>
+        /// <param name="element"></param>
         public void IsChecked(IWebElement element = null)
         {
             element ??= ExpressCheckBox;
-            var value = element.GetAttribute("checked");
 
-            var check = Convert.ToBoolean(value);
-            Assert.True(check);
+            var isChecked = element.IsChecked();
+
+            Assert.True(isChecked);
         }
 
         public void ScrollTab()
@@ -151,14 +180,10 @@ namespace DeliveryHeroAutomation.Pages
             _defaultTabBy.FluentFindElement().ScrollHorizontal(tab);
         }
 
-        public void DefaultTabIsNotDisplayed()
-        {
-            Assert.Throws<NoSuchElementException>(() =>
-            {
-                _defaultTabBy.FluentFindElement();
-            });
-        }
 
+        /// <summary>
+        /// 음식점 List 스크롤
+        /// </summary>
         public void ScrollRestaurantList()
         {
             var tabs =
@@ -169,18 +194,31 @@ namespace DeliveryHeroAutomation.Pages
             var target = tabs[0];
 
             source.ScrollHorizontal(target);
-
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void DefaultSelectedTab()
         {
             var tab =
-                AppiumDrvier.FindElement(By.XPath("//*[@content-desc='전체']"));
+                _defaultTabBy.FluentFindElement();
 
             Assert.True(tab.Selected);
         }
 
+        /// <summary>
+        /// Default Tab이 보이지 않을때
+        /// 체크하는 함수
+        /// </summary>
+        public void DefaultTabIsNotDisplayed()
+        {
+            Assert.Throws<NoSuchElementException>(() =>
+            {
+                _defaultTabBy.FluentFindElement();
+            });
+        }
 
         public void IsEqualAddress(string address)
         {
@@ -200,11 +238,5 @@ namespace DeliveryHeroAutomation.Pages
 
             Assert.IsTrue(CurrentNavigation.Selected);
         }
-
-        public void BackNavigation()
-        {
-        }
-
-
     }
 }

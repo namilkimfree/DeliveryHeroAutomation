@@ -47,6 +47,15 @@ namespace DeliveryHeroAutomation.Framework.Services
             return rs;
         }
 
+        public static bool IsChecked(this IWebElement element)
+        {
+            var value = element.GetAttribute("checked");
+
+            var isCheked = Convert.ToBoolean(value);
+
+            return isCheked;
+        }
+
         public static bool IsCompleted(this IWebElement element)
         {
             var fluentWait = CreateDefaultWait();
@@ -73,6 +82,7 @@ namespace DeliveryHeroAutomation.Framework.Services
 
             var startX = (descElement.Size.Width + descElement.Location.X)+ descElement.Size.Width;
             var startY = endY;
+
             action.Press(startX, startY).Wait(1000).MoveTo(endX, endY).Release().Perform();
         }
 
@@ -84,10 +94,18 @@ namespace DeliveryHeroAutomation.Framework.Services
             var startY = (element.Location.Y + (element.Size.Height * 0.5));
 
             var endX = startX; 
-            var endY = (element.Size.Height);
-            action.Press(startX, startY).Wait(100).MoveTo(endX, endY).Release().Perform();
+            var endY = (element.Location.Y + element.Size.Height);
+            
+            action.Press(endX, endY).Wait(1000).MoveTo(startX, startY).Release().Perform();
         }
 
+        /// <summary>
+        /// 수평으로 스크롤하면서
+        /// 찾고자하는 Element를 찾는다.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="scrollElement"></param>
+        /// <param name="find"></param>
         public static void FluentScrollForClick(this IWebElement element,IWebElement scrollElement ,By find)
         {
             var now = DateTime.Now;
@@ -108,8 +126,6 @@ namespace DeliveryHeroAutomation.Framework.Services
                     element.ScrollHorizontal(scrollElement);
                 }
             }
-
         }
-
     }
 }
