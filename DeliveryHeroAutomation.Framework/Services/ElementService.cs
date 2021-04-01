@@ -80,18 +80,18 @@ namespace DeliveryHeroAutomation.Framework.Services
             var endX = (element.Location.X);
             var endY = (element.Location.Y + (element.Size.Height * 0.5));
 
-            var startX = (descElement.Size.Width + descElement.Location.X)+ descElement.Size.Width;
+            var startX = (descElement.Size.Width + descElement.Location.X);
             var startY = endY;
 
             action.Press(startX, startY).Wait(1000).MoveTo(endX, endY).Release().Perform();
         }
 
-        public static void ScrollVertical(this IWebElement element)
+        public static void ScrollVertical(this IWebElement element, IWebElement descElement)
         {
             var action = new TouchAction(DriverManager.Instance.AppiumDriver);
 
-            var startX = (element.Location.X + (element.Size.Width * 0.5));
-            var startY = (element.Location.Y + (element.Size.Height * 0.5));
+            var startX = (descElement.Location.X + (element.Size.Width * 0.5));
+            var startY = (descElement.Location.Y + descElement.Size.Height);
 
             var endX = startX; 
             var endY = (element.Location.Y + element.Size.Height);
